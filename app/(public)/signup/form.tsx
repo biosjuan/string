@@ -16,7 +16,10 @@ function Form() {
     setErrors([]);
 
     if (password != confirmPassword) {
-      errors.push("Passwords do not match.");
+      const newErrors = [];
+
+      newErrors.push("Passwords do not match.");
+      setErrors(newErrors);
       return;
     }
     const res = await fetch("/api/signup", {
@@ -85,6 +88,13 @@ function Form() {
       >
         Sign in
       </button>
+      {errors.map((error) => {
+        return (
+          <div key={error} className="text-red-600">
+            {error}
+          </div>
+        );
+      })}
     </form>
   );
 }
