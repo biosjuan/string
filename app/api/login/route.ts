@@ -31,6 +31,6 @@ export async function POST(request: NextRequest) {
     secure: true,
   });
   const cook = cookies();
-  console.log("this is the route", cook.get("jwt-token"));
+  // console.log("this is the route", cook.get("jwt-token"));
   return response;
 }

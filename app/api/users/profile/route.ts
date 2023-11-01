@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(request: NextRequest) {
   // get currtly logged user
   const jwtPayload = await getJWTPayload();
-  console.log(jwtPayload);
+  // console.log("user", jwtPayload);
   // fetch user data
   const res = await sql(
     "select id, username, avatar from users where id = $1",
@@ -14,5 +14,5 @@ export async function GET(request: NextRequest) {
   // return user data
   const user = res.rows[0];
 
-  return NextResponse.json({});
+  return NextResponse.json(user);
 }
