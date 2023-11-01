@@ -14,7 +14,7 @@ async function loadFakeData(numUsers: number = 10) {
     await client.query("begin");
     for (let i = 0; i < numUsers; i++) {
       const saltRounds = 10;
-      const hash = await bcrypt.hash("string123", saltRounds);
+      const hash = await bcrypt.hash("strings123", saltRounds);
       await client.query(
         "insert into public.users (username, password, avatar) values ($1, $2, $3)",
         [faker.internet.userName(), hash, faker.image.avatar()]

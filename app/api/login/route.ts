@@ -2,6 +2,7 @@ import { sql } from "@/db";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import { SignJWT } from "jose";
+import { cookies } from "next/headers";
 
 export async function POST(request: NextRequest) {
   const json = await request.json();
@@ -22,12 +23,14 @@ export async function POST(request: NextRequest) {
     .setSubject(user.id)
     .setIssuedAt()
     .setExpirationTime("2w")
-    .sign(new TextEncoder().encode("my-jwt-secret"));
+    .sign(new TextEncoder().encode(process.env.JWT_SECRET));
   const response = NextResponse.json({ msg: "login success" });
   response.cookies.set("jwt-token", token, {
     sameSite: "strict",
     httpOnly: true,
     secure: true,
   });
+  const cook = cookies();
+  console.log("this is the route", cook.get("jwt-token"));
   return response;
 }
