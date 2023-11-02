@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
   const page =
     (searchParams.get("page") && parseInt(searchParams.get("page")!)) || 0;
   const limit = 10;
-  const offset = page - 10;
+  const offset = page;
 
   const statement = `select p.*, u.avatar, u.username from posts p inner join users u 
   on p.user_id = u.id where user_id = $1
@@ -22,4 +22,16 @@ export async function GET(request: NextRequest) {
   const res = await sql(statement, [jwtPayload.sub, limit, offset]);
 
   return NextResponse.json({ data: res.rows });
+}
+
+export async function POST(request: NextRequest) {
+  const json = await request.json();
+  const content = json.content;
+  const jwtPayload = await getJWTPayload();
+  const res = await sql(
+    `insert into posts (user_id, content) values ($1, $2) returning *`,
+    [jwtPayload.sub, content]
+  );
+
+  return NextResponse.json({ data: res.rows[0] }, { status: 201 });
 }
