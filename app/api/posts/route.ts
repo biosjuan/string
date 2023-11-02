@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
   const page =
     (searchParams.get("page") && parseInt(searchParams.get("page")!)) || 0;
   const limit = 10;
-  const offset = page;
+  const offset = page + 5;
 
   const statement = `select p.*, u.avatar, u.username from posts p inner join users u 
   on p.user_id = u.id where user_id = $1
