@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import useSWR, { mutate } from "swr";
 
 export default function UserPageHeader({ username }: { username: string }) {
@@ -17,6 +18,8 @@ export default function UserPageHeader({ username }: { username: string }) {
   if (isLoadingFollow || isLoadingUser) return <div>loading...</div>;
 
   console.log(dataUser.data[0], dataFollow);
+
+  if (dataUser.data.length === 0) notFound();
 
   const user = dataUser.data[0];
 
@@ -42,16 +45,21 @@ export default function UserPageHeader({ username }: { username: string }) {
   }
 
   return (
-    <header>
-      <div>
-        <h1>{username}</h1>
-        {dataFollow.data.length > 0 && (
-          <button onClick={handleUnfollow}>Unfollow</button>
-        )}
-        {dataFollow.data.length === 0 && (
-          <button onClick={handleFollow}>Follow</button>
-        )}
-      </div>
+    <header className="w-full bg-slate-800 p-2 rounded-lg flex flex-row justify-between">
+      <h1 className="text-lg font-bold">{username}</h1>
+      {dataFollow.data.length > 0 && (
+        <button
+          onClick={handleUnfollow}
+          className="bg-slate-900 p-2 rounded-lg"
+        >
+          Unfollow
+        </button>
+      )}
+      {dataFollow.data.length === 0 && (
+        <button onClick={handleFollow} className="bg-slate-900 p-2 rounded-lg">
+          Follow
+        </button>
+      )}
     </header>
   );
 }
