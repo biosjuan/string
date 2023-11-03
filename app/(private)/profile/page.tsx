@@ -16,7 +16,7 @@ export default function Profile() {
     <main>
       <h2>Profile</h2>
       <Form />
-      <PostContainer username={data.username} />
+      <PostContainer username={data.username} showEditBtn={true} />
     </main>
   );
 }
