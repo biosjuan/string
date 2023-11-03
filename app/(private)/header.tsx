@@ -7,8 +7,6 @@ export default function Header() {
   if (error) return <div>Failded to Load</div>;
   if (isLoading) return <div>loading...</div>;
 
-  console.log(data);
-
   return (
     <header className="flex flex-row w-full p-5 bg-slate-800 rounded-lg my-2 justify-between items-center">
       <div>
