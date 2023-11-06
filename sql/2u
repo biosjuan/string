@@ -1,0 +1,2 @@
+ALTER TABLE posts add COLUMN is_misinformation BOOLEAN;
+ALTER TABLE posts add COLUMN is_misinformation_flagged_at timestamp;
